@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shikder’s Public School</title>
+<style>
+:root{--bg:#f3f7ff;--card:#fff;--text:#12263f;--muted:#5b6b82;--blue:#1e63d6;--blue2:#0d3b8f;--line:#d9e3f5}
+:root[data-theme="dark"]{--bg:#0b1424;--card:#13213a;--text:#e8efff;--muted:#9fb0cc;--blue:#4c8dff;--blue2:#1b3a73;--line:#243a63}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,var(--blue2),var(--blue));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+header h1{font-size:1.05rem;flex:1;cursor:pointer}
+header button{background:rgba(255,255,255,.2);border:0;color:#fff;font-size:1.2rem;border-radius:10px;padding:6px 10px}
+main{max-width:900px;margin:0 auto;padding:16px}
+.hero{background:linear-gradient(135deg,var(--blue2),var(--blue));color:#fff;border-radius:18px;padding:26px 18px;text-align:center;margin-bottom:18px}
+.hero .logo{font-size:3rem}
+.hero h2{font-size:1.4rem}
+.hero p{opacity:.9;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 8px;text-align:center;text-decoration:none;color:var(--text);box-shadow:0 2px 8px rgba(30,99,214,.08);transition:transform .15s}
+.tile:active{transform:scale(.96)}
+.tile .ic{font-size:2.2rem;display:block}
+.tile span{font-weight:600;font-size:.95rem}
+h2.t{color:var(--blue);margin:6px 0 14px;font-size:1.3rem}
+.back{display:inline-block;margin-bottom:10px;color:var(--blue);text-decoration:none;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.card small{color:var(--muted)}
+.doc{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.btn{background:var(--blue);color:#fff;padding:7px 14px;border-radius:10px;text-decoration:none;font-size:.9rem;white-space:nowrap}
+.soon{color:var(--muted);font-size:.85rem}
+.imgs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.imgs div{aspect-ratio:4/3;background:var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.imgs img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:22px}
+</style>
+</head>
+<body>
+<header>
+  <h1 onclick="location.hash='home'">🏫 Shikder’s Public School</h1>
+  <button id="th" aria-label="Dark mode">🌙</button>
+</header>
+<main id="app"></main>
+<footer>© Shikder’s Public School</footer>
+
+<script>
+/* ====== এখানে আপনার তথ্য বদলান ====== */
+const SCHOOL = {
+  name: "Shikder’s Public School",
+  motto: "শিক্ষাই আলো",
+  address: "আপনার স্কুলের ঠিকানা লিখুন",
+  phone: "01XXXXXXXXX",
+  email: "school@example.com"
+};
+const NOTICES = [
+  {d:"০১ ডিসেম্বর ২০২৬", t:"বার্ষিক পরীক্ষার রুটিন প্রকাশিত হয়েছে।"},
+  {d:"২০ নভেম্বর ২০২৬", t:"নতুন শিক্ষাবর্ষের ভর্তি চলছে।"}
+];
+const TEACHERS = [
+  {n:"প্রধান শিক্ষকের নাম", s:"প্রধান শিক্ষক"},
+  {n:"শিক্ষকের নাম ১", s:"গণিত"},
+  {n:"শিক্ষকের নাম ২", s:"ইংরেজি"}
+];
+/* ক্লাসের ডকুমেন্ট: t = নাম, u = ফাইলের লিংক (খালি থাকলে "শীঘ্রই আসছে" দেখাবে) */
+const DOCS = {
+  1: [
+    {t:"ভর্তি ফরম", u:""},
+    {t:"শিক্ষার্থী তালিকা", u:""},
+    {t:"ক্লাস রুটিন", u:""},
+    {t:"বই তালিকা", u:""}
+  ]
+};
+const PHOTOS = []; /* যেমন: ["img/1.jpg","img/2.jpg"] */
+/* ====================================== */
+
+const TILES = [
+  ["classes","📚","ক্লাস"],["notice","📢","নোটিশ"],["teachers","👨‍🏫","শিক্ষক"],["gallery","🖼️","গ্যালারি"],
+  ["result","🏆","রেজাল্ট"],["admission","📝","ভর্তি"],["about","ℹ️","আমাদের সম্পর্কে"],["contact","📞","যোগাযোগ"]
+];
+const app = document.getElementById("app");
+const back = (h,l)=>`<a class="back" href="#${h}">← ${l}</a>`;
+
+function home(){
+  return `<div class="hero"><div class="logo">🏫</div><h2>${SCHOOL.name}</h2><p>${SCHOOL.motto}</p></div>
+  <div class="grid">${TILES.map(t=>`<a class="tile" href="#${t[0]}"><span class="ic">${t[1]}</span><span>${t[2]}</span></a>`).join("")}</div>`;
+}
+function classes(){
+  let g=""; for(let i=1;i<=10;i++) g+=`<a class="tile" href="#class-${i}"><span class="ic">🎓</span><span>ক্লাস ${i}</span></a>`;
+  return back("home","হোম")+`<h2 class="t">ক্লাস সমূহ</h2><div class="grid">${g}</div>`;
+}
+function cls(n){
+  const list = DOCS[n]||[];
+  const body = list.length ? list.map(d=>`<div class="card doc"><div>📄 ${d.t}</div>${d.u?`<a class="btn" href="${d.u}" target="_blank">খুলুন</a>`:`<span class="soon">শীঘ্রই আসছে</span>`}</div>`).join("") : `<div class="card soon">এই ক্লাসের ডকুমেন্ট শীঘ্রই যোগ হবে।</div>`;
+  return back("classes","ক্লাস তালিকা")+`<h2 class="t">ক্লাস ${n} – শিক্ষার্থীদের ডকুমেন্ট</h2>${body}`;
+}
+function notice(){
+  return back("home","হোম")+`<h2 class="t">নোটিশ বোর্ড</h2>`+NOTICES.map(n=>`<div class="card"><small>${n.d}</small><div>${n.t}</div></div>`).join("");
+}
+function teachers(){
+  return back("home","হোম")+`<h2 class="t">আমাদের শিক্ষকবৃন্দ</h2>`+TEACHERS.map(t=>`<div class="card">👤 <b>${t.n}</b><br><small>${t.s}</small></div>`).join("");
+}
+function gallery(){
+  const items = PHOTOS.length ? PHOTOS.map(p=>`<div><img src="${p}" alt="ছবি"></div>`).join("") : [1,2,3,4].map(()=>`<div>📷</div>`).join("");
+  return back("home","হোম")+`<h2 class="t">ফটো গ্যালারি</h2><div class="imgs">${items}</div>`;
+}
+function simple(title,text){
+  return back("home","হোম")+`<h2 class="t">${title}</h2><div class="card">${text}</div>`;
+}
+function contact(){
+  return simple("যোগাযোগ",`📍 ${SCHOOL.address}<br>📞 <a href="tel:${SCHOOL.phone}">${SCHOOL.phone}</a><br>✉️ <a href="mailto:${SCHOOL.email}">${SCHOOL.email}</a>`);
+}
+const ROUTES = {
+  home, classes, notice, teachers, gallery, contact,
+  result:()=>simple("রেজাল্ট","রেজাল্ট শীঘ্রই এখানে প্রকাশিত হবে।"),
+  admission:()=>simple("ভর্তি তথ্য","ভর্তির জন্য স্কুলে যোগাযোগ করুন অথবা ক্লাস ১-এর পেজ থেকে ভর্তি ফরম নিন।"),
+  about:()=>simple("আমাদের সম্পর্কে",`${SCHOOL.name} একটি আদর্শ শিক্ষাপ্রতিষ্ঠান। আমাদের লক্ষ্য: ${SCHOOL.motto}।`)
+};
+function render(){
+  const h = (location.hash||"#home").slice(1);
+  let html;
+  if(h.startsWith("class-")){ const n=+h.slice(6); html = (n>=1&&n<=10)?cls(n):home(); }
+  else html = (ROUTES[h]||home)();
+  app.innerHTML = html; window.scrollTo(0,0);
+}
+addEventListener("hashchange",render); render();
+
+/* ডার্ক মোড */
+const root=document.documentElement, btn=document.getElementById("th");
+function setTheme(t){ root.dataset.theme=t; btn.textContent = t==="dark"?"☀️":"🌙"; try{localStorage.setItem("theme",t)}catch(e){} }
+let saved=null; try{saved=localStorage.getItem("theme")}catch(e){}
+setTheme(saved||"light");
+btn.onclick=()=>setTheme(root.dataset.theme==="dark"?"light":"dark");
+</script>
+</body>
+</html>
