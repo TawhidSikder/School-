@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -29,7 +28,7 @@ h2.t{color:var(--blue);margin:6px 0 14px;font-size:1.3rem}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
 .card small{color:var(--muted)}
 .doc{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.btn{background:var(--blue);color:#fff;padding:7px 14px;border-radius:10px;text-decoration:none;font-size:.9rem;white-space:nowrap}
+.btn{background:var(--blue);color:#fff;padding:7px 14px;border-radius:10px;text-decoration:none;font-size:.9rem;white-space:nowrap;display:inline-block}
 .soon{color:var(--muted);font-size:.85rem}
 .imgs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .imgs div{aspect-ratio:4/3;background:var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
@@ -53,6 +52,7 @@ const SCHOOL = {
   phone: "01837637213",
   email: "tawhidsikder08@gmail.com"
 };
+const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfcyCgMlMBWZWdcS89ARk2OYIRdQoSHdFbZq2EBssNZn9rMIQ/viewform";
 const NOTICES = [
   {d:"০৯ নভেম্বর ২০২৬", t:"২০২৭ শিক্ষাবর্ষের জন্য জানুয়ারি মাসে শিক্ষার্থী ভর্তি শুরু হচ্ছে। ভর্তি সংক্রান্ত তথ্যের জন্য যোগাযোগ করুন: 01837637213"}
 ];
@@ -66,7 +66,7 @@ const TEACHERS = [
 ];
 const DOCS = {
   1: [
-    {t:"ভর্তি ফরম", u:""},
+    {t:"ভর্তি ফরম", u:FORM_URL},
     {t:"শিক্ষার্থী তালিকা", u:""},
     {t:"ক্লাস রুটিন", u:""},
     {t:"বই তালিকা", u:""}
@@ -104,6 +104,9 @@ function gallery(){
   const items = PHOTOS.length ? PHOTOS.map(p=>`<div><img src="${p}" alt="ছবি"></div>`).join("") : [1,2,3,4].map(()=>`<div>📷</div>`).join("");
   return back("home","হোম")+`<h2 class="t">ফটো গ্যালারি</h2><div class="imgs">${items}</div>`;
 }
+function admission(){
+  return back("home","হোম")+`<h2 class="t">ভর্তি ফর্ম</h2><div class="card">২০২৭ শিক্ষাবর্ষের ভর্তির জন্য নিচের ফর্মটি পূরণ করুন। ক্লাস ১ থেকে ১০ সবার জন্য একই ফর্ম।</div><iframe src="${FORM_URL}?embedded=true" style="width:100%;height:1100px;border:0;border-radius:14px;background:#fff" loading="lazy">লোড হচ্ছে…</iframe><p style="text-align:center;margin:12px"><a class="btn" href="${FORM_URL}" target="_blank">নতুন ট্যাবে ফর্ম খুলুন</a></p>`;
+}
 function simple(title,text){
   return back("home","হোম")+`<h2 class="t">${title}</h2><div class="card">${text}</div>`;
 }
@@ -111,9 +114,8 @@ function contact(){
   return simple("যোগাযোগ",`📍 ${SCHOOL.address}<br>📞 <a href="tel:${SCHOOL.phone}">${SCHOOL.phone}</a><br>✉️ <a href="mailto:${SCHOOL.email}">${SCHOOL.email}</a>`);
 }
 const ROUTES = {
-  home, classes, notice, teachers, gallery, contact,
+  home, classes, notice, teachers, gallery, contact, admission,
   result:()=>simple("রেজাল্ট","রেজাল্ট শীঘ্রই এখানে প্রকাশিত হবে।"),
-  admission:()=>simple("ভর্তি তথ্য","ভর্তির জন্য স্কুলে যোগাযোগ করুন অথবা ক্লাস ১-এর পেজ থেকে ভর্তি ফরম নিন।"),
   about:()=>simple("আমাদের সম্পর্কে",`${SCHOOL.name} একটি আদর্শ শিক্ষাপ্রতিষ্ঠান। আমাদের লক্ষ্য: ${SCHOOL.motto}।`)
 };
 function render(){
