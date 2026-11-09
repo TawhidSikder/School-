@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -45,25 +46,24 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:22px}
 <footer>© Shikder’s Public School</footer>
 
 <script>
-/* ====== এখানে আপনার তথ্য বদলান ====== */
 const SCHOOL = {
   name: "Shikder’s Public School",
   motto: "শিক্ষাই আলো",
-  address:"Shafipur Bazar, Shafipur, Dhaka",
+  address: "Shafipur Bazar, Gazipur, Dhaka",
   phone: "01837637213",
   email: "tawhidsikder08@gmail.com"
 };
 const NOTICES = [
-    {d:"০৯ নভেম্বর ২০২৬", t:"২০২৭ শিক্ষাবর্ষের জন্য জানুয়ারি মাসে শিক্ষার্থী ভর্তি শুরু হচ্ছে। ভর্তি সংক্রান্ত তথ্যের জন্য যোগাযোগ করুন: 01837637213"}
+  {d:"০৯ নভেম্বর ২০২৬", t:"২০২৭ শিক্ষাবর্ষের জন্য জানুয়ারি মাসে শিক্ষার্থী ভর্তি শুরু হচ্ছে। ভর্তি সংক্রান্ত তথ্যের জন্য যোগাযোগ করুন: 01837637213"}
 ];
-const TEACHERS = [{n:"Tawhid Sikder", s:"প্রধান শিক্ষক"},
+const TEACHERS = [
+  {n:"Tawhid Sikder", s:"প্রধান শিক্ষক"},
   {n:"Mihad Hasan", s:"সহকারী শিক্ষক"},
   {n:"Rohan Hasan", s:"সহকারী শিক্ষক"},
   {n:"Fahim Hasan", s:"সহকারী শিক্ষক"},
   {n:"Redika Islam", s:"সহকারী শিক্ষক"},
   {n:"Nabila Jahan", s:"সহকারী শিক্ষক"}
 ];
-/* ক্লাসের ডকুমেন্ট: t = নাম, u = ফাইলের লিংক (খালি থাকলে "শীঘ্রই আসছে" দেখাবে) */
 const DOCS = {
   1: [
     {t:"ভর্তি ফরম", u:""},
@@ -72,8 +72,7 @@ const DOCS = {
     {t:"বই তালিকা", u:""}
   ]
 };
-const PHOTOS = [const PHOTOS = ["1794194950737.jpg","FB_IMG_1790703068731.jpg"];]; /* যেমন: ["img/1.jpg","img/2.jpg"] */
-/* ====================================== */
+const PHOTOS = ["1794194950737.jpg","FB_IMG_1790703068731.jpg"];
 
 const TILES = [
   ["classes","📚","ক্লাস"],["notice","📢","নোটিশ"],["teachers","👨‍🏫","শিক্ষক"],["gallery","🖼️","গ্যালারি"],
@@ -126,7 +125,6 @@ function render(){
 }
 addEventListener("hashchange",render); render();
 
-/* ডার্ক মোড */
 const root=document.documentElement, btn=document.getElementById("th");
 function setTheme(t){ root.dataset.theme=t; btn.textContent = t==="dark"?"☀️":"🌙"; try{localStorage.setItem("theme",t)}catch(e){} }
 let saved=null; try{saved=localStorage.getItem("theme")}catch(e){}
